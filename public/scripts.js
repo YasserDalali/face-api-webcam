@@ -51,7 +51,6 @@ video.addEventListener("play", async () => {
   faceapi.matchDimensions(canvas, displaySize);
 
   setInterval(async () => {
-    console.log("START2")
 
     const detections = await faceapi
       .detectAllFaces(video)
@@ -66,11 +65,12 @@ video.addEventListener("play", async () => {
       return faceMatcher.findBestMatch(d.descriptor);
     });
     results.forEach((result, i) => {
+      console.log(result)
       const box = resizedDetections[i].detection.box;
       const drawBox = new faceapi.draw.DrawBox(box, {
         label: result,
       });
-      drawBox.draw(canvas)
+      drawBox.draw(canvas).withFaceLandmarks()
     });
   }, 100);
 });
